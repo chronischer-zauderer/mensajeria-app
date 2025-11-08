@@ -1,4 +1,4 @@
-
+/* 
 BEGIN;
 
 
@@ -10,7 +10,7 @@ BEGIN
     CREATE TYPE message_type AS ENUM ('text','image','file','system','reaction','sticker','reply');
   END IF;
 END
-$$;
+$$; */
 
 -- 2) Tabla users
 CREATE TABLE IF NOT EXISTS users (
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS users (
   last_active TIMESTAMP WITH TIME ZONE
 );
 
--- 3) Tabla chats
+/* -- 3) Tabla chats
 CREATE TABLE IF NOT EXISTS chats (
   id SERIAL PRIMARY KEY,
   is_group BOOLEAN NOT NULL DEFAULT FALSE,
@@ -41,9 +41,9 @@ CREATE TABLE IF NOT EXISTS chats (
   is_public BOOLEAN DEFAULT FALSE,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
   last_activity_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
-);
+); */
 
--- 4) Tabla messages
+/* -- 4) Tabla messages
 CREATE TABLE IF NOT EXISTS messages (
   id SERIAL PRIMARY KEY,
   chat_id INTEGER NOT NULL REFERENCES chats(id) ON DELETE CASCADE,
@@ -181,3 +181,4 @@ COMMIT;
 -- =========================
 -- FIN: esquema completo
 -- =========================
+ */

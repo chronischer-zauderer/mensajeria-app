@@ -15,7 +15,7 @@ export class AuthService {
 
     constructor(
         private userService: UsersService,
-        private jwtService: JwtService
+        private jwtService: JwtService,
     ) {}
 
     
@@ -61,12 +61,12 @@ export class AuthService {
         await this.checkUserExistence(registerDto.email, registerDto.username);
 
         const salt = await bcrypt.genSalt(10);
-        const passwordHash = await bcrypt.hash(registerDto.password,salt)
+        const hashedPassword = await bcrypt.hash(registerDto.password,salt)
 
         const newUser = await this.userService.createUser({
             username: registerDto.username,
             email: registerDto.email,
-            passwordHash: passwordHash,
+            password_hash: hashedPassword,
             nickname: registerDto.nickname || null,
             phone_number: registerDto.phone_number || null,
             profile_picture_url: registerDto.profile_picture_url || null,

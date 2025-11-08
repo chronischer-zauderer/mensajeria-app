@@ -8,7 +8,7 @@ import { NotFoundException } from '@nestjs/common';
 interface CreateUserFields {
   username: string;
   email: string;
-  passwordHash: string;
+  password_hash: string;
   nickname?: string | null;
   phone_number?: string | null;
   profile_picture_url?: string | null;
@@ -46,7 +46,7 @@ export class UsersService {
   async mapToUserOutputDto(user: User): Promise<UserOutputDto> {
       const dto = new UserOutputDto();
       dto.id = user.id;
-      dto.username = user.username;
+      dto.username = user.username!;
       dto.email = user.email;
       dto.nickname = user.nickname;
       dto.phone_number = user.phone_number;
