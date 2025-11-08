@@ -5,20 +5,16 @@ import * as bcrypt from 'bcrypt'
 import { UsersService } from '../users/users.service';
 import { LoginUserDto } from './dto/login-user.dto';
 import { AuthResponseDto } from './dto/auth-response.dto';
-import { UserOutputDto } from 'src/users/dto/user-output.dto';
 import { User } from '../users/users.entity'
 import { RegisterUserDto } from './dto/register-user.dto';
 
 
 @Injectable()
 export class AuthService {
-
     constructor(
         private userService: UsersService,
         private jwtService: JwtService,
     ) {}
-
-    
 
     async login(loginDto: LoginUserDto): Promise<AuthResponseDto>{
         const user = await this.validateUser(loginDto.email,loginDto.password);
@@ -27,7 +23,6 @@ export class AuthService {
 
     async validateUser(email: string, pass: string): Promise<User> {
 
-        //implementar findOneByEmail en user.service
         const user = await this.userService.findOneByEmailForAuth(email);
 
         if(!user){

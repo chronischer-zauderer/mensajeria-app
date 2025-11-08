@@ -1,6 +1,6 @@
 export class UserOutputDto {
   id: number;
-  username!: string; // el ! indica que siempre estará definido
+  username!: string; 
   email!: string;
   nickname?: string | null;
   phone_number?: string | null;
