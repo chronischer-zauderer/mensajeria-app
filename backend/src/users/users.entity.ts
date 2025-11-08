@@ -33,7 +33,6 @@ export class User{
   @Column({ type: 'text', nullable: true })
   bio?: string | null;
 
-
   @Column({ type: 'jsonb', nullable: false, default: () => "'{}'::jsonb" })
   preferences: Record<string, any>;
 
