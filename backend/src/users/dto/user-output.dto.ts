@@ -7,6 +7,6 @@ export class UserOutputDto {
   profile_picture_url?: string | null;
   status!: 'online' | 'away' | 'dnd' | 'offline';
   bio?: string | null;
-  createdAt!: Date;
+  created_at!: Date;
   lastActive?: Date | null;
 }
