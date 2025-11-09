@@ -13,6 +13,11 @@ export const login = async (email, password) => {
   return res.data;
 };
 
+export const register = async (registerDto) => {
+  const res = await api.post("/auth/register", registerDto);
+  return res.data;
+};
+
 export const logout = () => {
   localStorage.removeItem("accessToken");
   localStorage.removeItem("user");
