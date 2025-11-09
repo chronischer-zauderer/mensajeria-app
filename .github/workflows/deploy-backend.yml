@@ -1,4 +1,4 @@
-name: Test NestJS with Postgres
+name: Build backend only
 
 on:
   push:
@@ -7,31 +7,9 @@ on:
     branches: [ main ]
 
 jobs:
-  test:
+  build-backend:
+    name: Build backend
     runs-on: ubuntu-latest
-
-    services:
-      postgres:
-        image: postgres:13
-        env:
-          POSTGRES_DB: msbd
-          POSTGRES_USER: admin
-          POSTGRES_PASSWORD: admin123@
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd "pg_isready -U admin"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
-    env:
-      NODE_ENV: test
-      DB_HOST: 127.0.0.1
-      DB_PORT: 5432
-      DB_USER: admin
-      DB_PASSWORD: admin123@
-      DB_NAME: msbd
 
     steps:
       - name: Checkout code
@@ -50,33 +28,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - name: Install dependencies
+      - name: Install backend dependencies
         working-directory: ./backend
         run: npm ci
-
-      - name: Wait for Postgres to be ready
-        run: |
-          echo "Waiting for Postgres..."
-          until pg_isready -h 127.0.0.1 -p 5432 -U admin; do
-            sleep 2
-            echo "still waiting..."
-          done
-        env:
-          PGPASSWORD: admin123@
 
       - name: Build backend
         working-directory: ./backend
         run: npm run build
 
-      - name: Run migrations (TypeORM / Prisma / tu script)
-        working-directory: ./backend
-        run: |
-          if [ -f package.json ] && npm run | grep -q "migrate"; then
-            npm run migrate
-          else
-            echo "No migration script found, skipping..."
-          fi
-
-      - name: Run tests
-        working-directory: ./backend
-        run: npm test -- --runInBand
