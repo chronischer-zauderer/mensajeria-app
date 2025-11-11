@@ -22,8 +22,8 @@ export class FriendRequestService {
     }
     const existingRequest = await this.friendRepo
         .createQueryBuilder('request')
-        .where('(request.senderId = :sender AND request.receiverId = :receiver)', { sender: senderId, receiver: receiverId })
-        .orWhere('(request.senderId = :receiver AND request.receiverId = :sender)', { sender: senderId, receiver: receiverId })
+        .where('(request.sender_id = :sender AND request.receiver_id = :receiver)', { sender: senderId, receiver: receiverId })
+        .orWhere('(request.sender_id = :receiver AND request.receiver_id = :sender)', { sender: senderId, receiver: receiverId })
         .andWhere('request.status = :status', { status: 'pending' })
         .getOne();
 
