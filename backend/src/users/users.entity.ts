@@ -1,4 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn } from "typeorm";
+import { Contact } from "src/contact/entities/contact.entity";
+import { FriendRequest } from "src/friend-request/entities/friend-request.entity";
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, OneToMany } from "typeorm";
 
 @Entity('users')
 export class User{
@@ -44,4 +46,19 @@ export class User{
 
   @Column({ type: 'jsonb', nullable: false, default: () => "'[]'::jsonb" })
   push_tokens: string[];
+
+  @OneToMany(() => FriendRequest, (request) => request.sender)
+    sentRequests: FriendRequest[];
+
+    // Solicitudes que este usuario HA RECIBIDO
+    @OneToMany(() => FriendRequest, (request) => request.receiver)
+    receivedRequests: FriendRequest[];
+
+
+    @OneToMany(() => Contact, (contact) => contact.userA)
+    contactsAsA: Contact[];
+
+    // Un usuario puede aparecer como user_b en múltiples contactos
+    @OneToMany(() => Contact, (contact) => contact.userB)
+    contactsAsB: Contact[];
 }

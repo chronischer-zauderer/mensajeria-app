@@ -5,6 +5,8 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { FriendRequestModule } from './friend-request/friend-request.module';
+import { ContactModule } from './contact/contact.module';
 
 
 @Module({
@@ -30,6 +32,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     }),
     UsersModule,
     AuthModule,
+    FriendRequestModule,
+    ContactModule,
   ],
   controllers: [AppController],
   providers: [AppService],
