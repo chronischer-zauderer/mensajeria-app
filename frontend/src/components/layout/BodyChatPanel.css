@@ -1,0 +1,136 @@
+/* Body Chat Panel */
+.body-chat-panel {
+    background-color: #e5ddd5;
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23d1d7db' fill-opacity='0.4' fill-rule='evenodd'/%3E%3C/svg%3E");
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+/* Messages wrapper + scrollable element - SCROLL ESTILO WHATSAPP */
+.messages-wrapper {
+    height: 100%;
+    width: 100%;
+    padding: 1rem; /* wrapper provides padding */
+    box-sizing: border-box;
+    position: relative; /* for absolute overlay */
+}
+
+.messages-container {
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none; /* Firefox - ocultar scrollbar */
+    -ms-overflow-style: none; /* IE y Edge - ocultar scrollbar */
+    box-sizing: border-box;
+}
+
+/* Webkit - ocultar scrollbar por defecto */
+.messages-container::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
+
+/* Webkit - mostrar scrollbar solo cuando está scrolling */
+.messages-container.scrolling::-webkit-scrollbar {
+    width: 6px;
+}
+
+.messages-container.scrolling::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 5px 0;
+}
+
+.messages-container.scrolling::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+.messages-container.scrolling::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+/* Overlay scrollbar: visual only, positioned over content, non-intrusive */
+
+.scrollbar-overlay {
+    position: absolute;
+    right: 6px; /* align with where native scrollbar would be visually */
+    top: 0;
+    bottom: 0;
+    width: 12px;
+    pointer-events: none; /* let clicks pass through except the thumb */
+}
+
+.scrollbar-thumb {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    background: rgba(0,0,0,0.25);
+    border-radius: 4px;
+    transition: opacity 0.18s ease, background 0.12s ease;
+    opacity: 0;
+    pointer-events: auto; /* allow dragging */
+    touch-action: none; /* prevent default touch scrolling while dragging */
+}
+
+/* show the thumb when container has .scrolling (controlled by hook) */
+.messages-container.scrolling ~ .scrollbar-overlay .scrollbar-thumb,
+.messages-container.scrolling + .scrollbar-overlay .scrollbar-thumb {
+    opacity: 1;
+}
+
+/* make sure overlay sits above content but below any floating UI (z-index modest) */
+.messages-wrapper { position: relative; }
+.scrollbar-overlay { z-index: 5; }
+
+/* Burbujas de mensaje */
+.message-bubble {
+    max-width: 70%;
+    padding: 8px 12px;
+    border-radius: 7.5px;
+    margin-bottom: 8px;
+    word-wrap: break-word;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    box-sizing: border-box;
+}
+
+.contact-message {
+    background-color: #ffffff;
+    border-top-left-radius: 0;
+}
+
+.user-message {
+    background-color: #dcf8c6;
+    border-top-right-radius: 0;
+}
+
+.message-text {
+    word-wrap: break-word;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+    line-height: 1.4;
+    margin: 0;
+    padding: 0;
+}
+
+.message-time {
+    font-size: 0.65rem;
+    color: #667781;
+    text-align: right;
+    margin-top: 4px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 3px;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+}
+
+.message-status {
+    color: #4fc3f7;
+    flex-shrink: 0;
+}

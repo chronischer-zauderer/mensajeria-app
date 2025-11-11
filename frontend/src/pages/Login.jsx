@@ -42,7 +42,7 @@ function Login() {
         localStorage.setItem("user", JSON.stringify(data.user));
       }
       // redirige a la ruta que uses como panel privado
-      navigate("/dashboard");
+      navigate("/");
     } catch (err) {
       // axios error handling
       const message =
