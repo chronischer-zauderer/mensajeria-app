@@ -21,7 +21,16 @@ export class UsersService {
     private readonly usersRepo: Repository<User>,
   ) {}
 
-
+  async findAll():Promise<User[]>{
+    const user = this.usersRepo.find();
+    return user;
+  }
+  async findOneById(id: number): Promise<User | null>{
+    const user = await this.usersRepo.findOne({
+      where: { id },
+    });
+    return user;
+  }
   async findOneByEmailForAuth(email: string): Promise<User | null> {
     const user = await this.usersRepo.findOne({
       where: { email },
@@ -53,7 +62,7 @@ export class UsersService {
       dto.profile_picture_url = user.profile_picture_url;
       dto.status = user.status;
       dto.bio = user.bio;
-      dto.createdAt = user.created_at;
+      dto.created_at = user.created_at;
       dto.lastActive = user.last_active;
       return dto;
   }
