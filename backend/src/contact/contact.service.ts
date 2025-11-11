@@ -11,23 +11,54 @@ export class ContactService {
     @InjectRepository(Contact)
     private readonly contactRepo: Repository<Contact>,
   ){}
-  async createContact(userA: number, UserB: number){
-    const newContact = this.contactRepo.create({
-      userA: {id: userA},
-      userB: {id:UserB},
-    });
-    return this.contactRepo.save(newContact)
-  }
+  // En src/contact/contact.service.ts
 
-  async getContacts(userId:number){
-    return this.contactRepo.find({
-      where: [
-        {userA: {id: userId}},
-        {userB: {id:userId},}
-      ],
-      relations: ['userA','userB']
-    });
-  }
+  async createContact(user1Id: number, user2Id: number) {
+  const userAId = Math.min(user1Id, user2Id);
+  const userBId = Math.max(user1Id, user2Id);
+
+  const newContact = this.contactRepo.create({
+    userA: { id: userAId },
+    userB: { id: userBId },
+  });
+
+  return this.contactRepo.save(newContact);
+}
+
+  // en src/contact/contact.service.ts
+
+async getContacts(userId: number) {
+  const contacts = await this.contactRepo.find({
+    where: [
+      { userA: { id: userId } },
+      { userB: { id: userId } }
+    ],
+    relations: ['userA', 'userB'],
+    select: {
+      id: true, 
+      userA: {
+        id: true,
+        username: true,
+        nickname: true,
+      },
+      userB: {
+        id: true,
+        username: true,
+        nickname: true,
+      }
+    }
+  });
+
+  return contacts.map(contact => {
+    const otherUser = contact.userA.id === userId ? contact.userB : contact.userA;
+    return {
+      contactId: contact.id,
+      id: otherUser.id,       
+      username: otherUser.username,
+      nickname: otherUser.nickname,
+    };
+  });
+}
   async deleteContact(userId:number,contact:number){
     const userAId = Math.min(userId, contact);
     const userBId = Math.max(userId, contact);
