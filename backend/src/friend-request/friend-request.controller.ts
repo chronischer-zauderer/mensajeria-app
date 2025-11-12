@@ -1,23 +1,46 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req, NotFoundException, BadRequestException } from '@nestjs/common';
 import { FriendRequestService } from './friend-request.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { SendRequestDto } from './dto/send-request.dto';
 import { FriendRequest } from './entities/friend-request.entity';
+import { Not } from 'typeorm';
+import { UsersService } from 'src/users/users.service';
 
 
 @Controller('requests')
 @UseGuards(JwtAuthGuard)
 export class FriendRequestController {
-  constructor(private readonly friendRequestService: FriendRequestService) {}
+  constructor(private readonly friendRequestService: FriendRequestService,
+    private readonly userService: UsersService
+  ) {}
 
+  
   @Post()
-  async sendRequest(@Body() sendRequestDto: SendRequestDto, @Req() req: any){
-    const senderId = req.user.id; 
-    const receiverId = sendRequestDto.receiverId; 
+  async sendRequest(@Body() sendRequestDto: SendRequestDto, @Req() req: any) {
+    const senderId = req.user.id;
+    let receiverId: number;
+
+    if (sendRequestDto.receiverId) {
+      receiverId = sendRequestDto.receiverId;
+    } else if (sendRequestDto.receiverUsername) {
+      const user = await this.userService.findByUsername(sendRequestDto.receiverUsername);
+
+      if (!user) {
+        throw new NotFoundException('Usuario receptor no encontrado.');
+      }
+      receiverId = user.id;
+    } else {
+      throw new NotFoundException('Debe proporcionar el ID o el nombre de usuario del receptor.');
+    }
+    
+    if (senderId === receiverId) {
+        throw new BadRequestException('No puedes enviarte una solicitud de amistad a ti mismo.');
+    }
     const request = await this.friendRequestService.sendRequest(senderId, receiverId);
+    
     return {
-        message: 'Solicitud de amistad enviada exitosamente.',
-        data: request,
+      message: 'Solicitud de amistad enviada exitosamente.',
+      data: request,
     };
   }
 

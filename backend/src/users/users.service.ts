@@ -38,6 +38,12 @@ export class UsersService {
 
     return user; 
   }
+  async findByUsername(username: string){
+    const user = await this.usersRepo.findOne({
+      where : { username },
+    })
+    return user;
+  }
 
   async findOneByUsernameForAuth(username: string): Promise <User | null> {
     const user = await this.usersRepo.findOne({

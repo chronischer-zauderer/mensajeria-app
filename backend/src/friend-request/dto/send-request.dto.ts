@@ -1,7 +1,12 @@
-import { IsNotEmpty, IsNumber } from "class-validator";
+import { IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 
 export class SendRequestDto {
     @IsNumber()
-    @IsNotEmpty()
+    @IsOptional()
     receiverId:number;
+
+    
+    @IsOptional()
+    @IsString()
+    receiverUsername?: string;
 }
