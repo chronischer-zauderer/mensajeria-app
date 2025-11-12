@@ -16,7 +16,7 @@ function ForgotPassword({ text = "¿Olvidaste tu contraseña?", message = "¡Rec
         onMouseEnter={() => setHover(true)}   // 👈 entra el cursor
         onMouseLeave={() => setHover(false)} // 👈 sale el cursor
         style={{
-          color: hover ? "#00aaff" : "#ffffff", // 👈 cambia color al hacer hover
+          color: hover ? "#00aaff" : "#000000ff", // 👈 cambia color al hacer hover
           textDecoration: hover ? "underline" : "none",
           cursor: "pointer",
           fontWeight: "500",
