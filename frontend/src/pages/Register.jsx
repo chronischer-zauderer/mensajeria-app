@@ -3,11 +3,8 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import "./Register.css"
 import { register } from "../api/authService";
-import { register } from "../api/authService";
 import ForgotPassword from "../components/ui/ForgotPassword.jsx";
 import person from "../assets/person.svg";
-import envelopeopen from "../assets/envelope-open.svg";
-import phone from "../assets/phone.svg";
 import envelopeopen from "../assets/envelope-open.svg";
 import phone from "../assets/phone.svg";
 import lock from "../assets/lock.svg";
