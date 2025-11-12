@@ -1,5 +1,5 @@
 import { useRef, useEffect, useCallback, useState } from 'react';
-import { useWhatsAppScroll } from './useWhatsAppScroll';
+import { useWhatsAppScroll } from '../common/useWhatsAppScroll';
 import MessageBubble from './MessageBubble';
 import './BodyChatPanel.css';
 
