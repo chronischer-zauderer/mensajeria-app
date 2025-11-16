@@ -4,7 +4,7 @@ function MessageBubble({ message }) {
     return (
         <div className={`d-flex mb-2 ${isUser ? "justify-content-end" : "justify-content-start"}`}>
             <div className={`message-bubble ${isUser ? "user-message" : "contact-message"}`}>
-                <div className="message-text">{message.text}</div>
+                <div className={`message-text ${isUser ? "text-white" : "text-black"}`}>{message.text}</div>
                 <div className="message-time">
                     <span className="timestamp">{formatTime(message.timestamp)}</span>
                     {isUser && (

@@ -26,7 +26,6 @@ import { ContactModule } from './contact/contact.module';
         database: configService.get<string>('DB_DATABASE'),
         
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
-        // Nota: synchronize: true solo debe usarse en desarrollo
         synchronize: true, 
       }),
     }),
