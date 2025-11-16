@@ -1,4 +1,5 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { getAllUsers } from '../../api/users';
 import './AddPeopleButton.css';
 import Plus from "../../assets/plus.svg";
 import Send from "../../assets/capslock-fill.svg";
@@ -41,9 +42,23 @@ function FloatingButtonWithModal() {
 function Modal({ onClose, buttonRef }) {
     const [addName, setAddName] = useState("");
     const [userSelected, setUserSelected] = useState(null);
+    const [users, setUsers] = useState([]);
 
     const modalRef = useRef(null);
-    const users = [
+    
+    useEffect(() => {
+        async function loadUsers() {
+            try {
+                const data = await getAllUsers();
+                setUsers(data);
+            } catch (err) {
+                console.error("Error al cargar usuarios:", err);
+            }
+        }
+        loadUsers();
+    }, []);
+
+    const usersall = [
         { id: 1, name: "Julio" },
         { id: 2, name: "Santiago" },
         { id: 3, name: "Luis" },
